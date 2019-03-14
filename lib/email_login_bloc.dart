@@ -13,7 +13,11 @@ class EmailLoginBloc with Validators {
       _passwordController.stream.transform(passwordValidator);
 
   Stream<bool> get loginCheck =>
-      Observable.combineLatest2(email, password, (e, p) => true);
+      Observable.combineLatest2(email, password, (e, p) {
+        return (e == _emailController.value && p == _passwordController.value)
+            ? true
+            : null;
+      });
 
   dispose() {
     _emailController.close();
